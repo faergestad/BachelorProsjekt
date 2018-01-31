@@ -3,4 +3,6 @@
     <string name="sign_in">Stemple inn</string>
     <string name="sign_out">Stemple ut</string>
     <string name="logodescription">HSN logo</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>

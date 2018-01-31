@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,25 +14,18 @@
         android:src="@drawable/hsnlogo"
         android:layout_centerHorizontal="true" />
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/userField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignBottom="@+id/logo"
-        android:gravity="center_horizontal" >
+        android:hint="@string/username"
+        android:layout_alignBottom="@+id/logo"/>
 
-        <Button
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="7dp"
-            android:text="@string/sign_in"/>
+    <EditText
+        android:id="@+id/passField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:layout_alignBottom="@+id/userField"/>
 
-        <Button
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:text="@string/sign_out"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
