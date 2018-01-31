@@ -16,6 +16,7 @@
 
     <EditText
         android:id="@+id/userField"
+        style="@style/loginScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/username"
@@ -23,9 +24,16 @@
 
     <EditText
         android:id="@+id/passField"
+        style="@style/loginScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
         android:layout_alignBottom="@+id/userField"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/login"/>
 
 </LinearLayout>

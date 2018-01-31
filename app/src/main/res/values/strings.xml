@@ -5,4 +5,5 @@
     <string name="logodescription">HSN logo</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>
