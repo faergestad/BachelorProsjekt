@@ -12,7 +12,7 @@
         android:layout_height="200dp"
         android:contentDescription="@string/logodescription"
         android:src="@drawable/hsnlogo"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:id="@+id/userField"
