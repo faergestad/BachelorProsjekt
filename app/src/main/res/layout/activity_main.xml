@@ -10,30 +10,49 @@
         android:id="@+id/logo"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
         android:contentDescription="@string/logodescription"
-        android:src="@drawable/hsnlogo"
-        android:layout_gravity="center_horizontal" />
+        android:src="@drawable/hsnlogo" />
 
     <EditText
         android:id="@+id/userField"
         style="@style/loginScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
-        android:layout_alignBottom="@+id/logo"/>
+        android:layout_alignBottom="@+id/logo"
+        android:hint="@string/username" />
 
     <EditText
         android:id="@+id/passField"
         style="@style/loginScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:layout_alignBottom="@+id/userField"/>
+        android:layout_alignBottom="@+id/userField"
+        android:hint="@string/password" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/rememberSwitch"
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="7dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remember me"/>
+
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/login"/>
+        android:layout_margin="10dp"
+        android:text="@string/login" />
 
 </LinearLayout>
