@@ -49,6 +49,8 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/loginBtn"
+        android:onClick="loginBtnClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
