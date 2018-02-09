@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,14 +25,19 @@ public class MainActivity extends AppCompatActivity {
         skrivPassord = findViewById(R.id.passField);
         huskMeg = findViewById(R.id.rememberSwitch);
         loginBtn = findViewById(R.id.loginBtn);
+
+        loginBtn.setOnClickListener(onClickListener);
+
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-            Intent fraLogin = new Intent(v.getContext(), HovedSkjerm.class);
-            startActivity(fraLogin);
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), HovedSkjerm.class);
+            startActivity(intent);
+            String melding = "Success";
+            Toast meldingsToast = Toast.makeText(getApplicationContext(), melding, Toast.LENGTH_LONG);
+            meldingsToast.show();
         }
     };
-
 }
