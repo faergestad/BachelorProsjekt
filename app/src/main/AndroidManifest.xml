@@ -16,7 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HovedSkjerm"></activity>
+        <activity android:name=".HovedSkjerm" />
+        <activity android:name=".TimeRegistrering" />
+        <activity android:name=".Oppdrag" />
+        <activity android:name=".Kunde" />
+        <activity android:name=".Ansatt"></activity>
     </application>
 
 </manifest>
