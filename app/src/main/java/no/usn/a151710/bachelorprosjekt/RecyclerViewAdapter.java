@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         Ansatt ansatt1 = ansatt.get(position);
 
-        holder.NummerTextView.setText(String.valueOf(ansatt1.getUsername()));
+        holder.NummerTextView.setText(ansatt1.getfName() + " " + ansatt1.getlName());
         holder.TilgangsTextView.setText(String.valueOf(ansatt1.getAccessLevel()));
         holder.StillingsTextView.setText(ansatt1.getPosition());
 

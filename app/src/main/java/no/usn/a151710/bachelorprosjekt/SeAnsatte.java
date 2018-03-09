@@ -24,7 +24,7 @@ public class SeAnsatte extends AppCompatActivity {
     ArrayAdapter<Ansatt> dataAdapter = null;
     private ArrayList<Ansatt> dataArray = new ArrayList<>();
     RecyclerView recyclerView;
-    String password, position;
+    String password, position, fName, lName;
     int username, accessLevel;
 
     RecyclerView.LayoutManager recyclerViewLayoutManager;
@@ -48,15 +48,17 @@ public class SeAnsatte extends AppCompatActivity {
     }
 
     public void getAnsatt(ArrayList<Ansatt> ansattListe) {
-        dataAdapter = new ArrayAdapter<Ansatt>(this, R.layout.recyclerview_items, ansattListe);
+        dataAdapter = new ArrayAdapter<>(this, R.layout.recyclerview_items, ansattListe);
         for (int i = 0; i < ansattListe.size(); i++) {
-            Ansatt ansatt2 = new Ansatt(username, password, accessLevel, position);
+            Ansatt ansatt2 = new Ansatt(username, password, accessLevel, position, fName, lName);
             try {
                 Ansatt data1 = ansattListe.get(i);
                 ansatt2.setUsername(data1.getUsername());
                 ansatt2.setPassword(data1.getPassword());
                 ansatt2.setAccessLevel(data1.getAccessLevel());
                 ansatt2.setPosition(data1.getPosition());
+                ansatt2.setfName(data1.getfName());
+                ansatt2.setlName(data1.getlName());
             } catch (Exception e) {
                 e.printStackTrace();
             }

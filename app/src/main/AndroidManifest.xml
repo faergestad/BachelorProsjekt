@@ -21,8 +21,8 @@
         </activity>
         <activity android:name=".HovedSkjerm" />
         <activity android:name=".TimeRegistrering" />
-        <activity android:name=".Oppdrag" />
-        <activity android:name=".Kunde" />
+        <activity android:name=".SeOppdrag" />
+        <activity android:name=".SeKunde" />
         <activity android:name=".SeAnsatte"></activity>
     </application>
 

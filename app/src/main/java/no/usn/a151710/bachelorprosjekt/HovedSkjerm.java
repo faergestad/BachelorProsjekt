@@ -40,12 +40,12 @@ public class HovedSkjerm extends AppCompatActivity {
                     break;
 
                 case R.id.oppdragKnapp:
-                    Intent startV2 = new Intent(v.getContext(), Oppdrag.class);
+                    Intent startV2 = new Intent(v.getContext(), SeOppdrag.class);
                     startActivity(startV2);
                     break;
 
                 case R.id.kundeKnapp:
-                    Intent startV3 = new Intent(v.getContext(), Kunde.class);
+                    Intent startV3 = new Intent(v.getContext(), SeKunde.class);
                     startActivity(startV3);
                     break;
 

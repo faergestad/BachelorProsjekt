@@ -14,21 +14,24 @@ import java.util.ArrayList;
 public class Ansatt {
 
     private int username;
-    private String password;
+    private String password, position, fName, lName;
     private int accessLevel;
-    private String position;
 
     private static final String TABELL_NAVN = "users";
     private static final String KOL_USERNAME = "username";
     private static final String KOL_PASSWORD = "password";
     private static final String KOL_ACCESS_LEVEL = "accessLevel";
     private static final String KOL_POSITION = "position";
+    private static final String KOL_FNAME = "fName";
+    private static final String KOL_LNAME = "lName";
 
-    public Ansatt(int username, String password, int accessLevel, String position) {
+    public Ansatt(int username, String password, int accessLevel, String position, String fName, String lName) {
         this.username = username;
         this.password = password;
         this.accessLevel = accessLevel;
         this.position = position;
+        this.fName = fName;
+        this.lName = lName;
     }
 
     public Ansatt(JSONObject jsonAnsatt) {
@@ -36,6 +39,8 @@ public class Ansatt {
         this.password = jsonAnsatt.optString(KOL_PASSWORD);
         this.accessLevel = jsonAnsatt.optInt(KOL_ACCESS_LEVEL);
         this.position = jsonAnsatt.optString(KOL_POSITION);
+        this.fName = jsonAnsatt.optString(KOL_FNAME);
+        this.lName = jsonAnsatt.optString(KOL_LNAME);
     }
 
     public static ArrayList<Ansatt> lagAnsattListe(String jsonAnsattString)
@@ -60,6 +65,8 @@ public class Ansatt {
             jsonAnsatt.put(KOL_PASSWORD, this.password);
             jsonAnsatt.put(KOL_ACCESS_LEVEL, this.accessLevel);
             jsonAnsatt.put(KOL_POSITION, this.position);
+            jsonAnsatt.put(KOL_FNAME, this.fName);
+            jsonAnsatt.put(KOL_FNAME, this.lName);
         } catch (JSONException e) {
             return null;
         }
@@ -70,9 +77,7 @@ public class Ansatt {
         return username;
     }
 
-    public void setUsername(int username) {
-        this.username = username;
-    }
+    public void setUsername(int username) { this.username = username; }
 
     public String getPassword() {
         return password;
@@ -97,5 +102,13 @@ public class Ansatt {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    public String getfName() { return fName; }
+
+    public void setfName(String fName) { this.fName = fName; }
+
+    public String getlName() { return lName; }
+
+    public void  setlName(String lName) { this.lName = lName; }
 
 }
