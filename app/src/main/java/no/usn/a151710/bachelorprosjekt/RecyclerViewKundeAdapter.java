@@ -58,7 +58,7 @@ public class RecyclerViewKundeAdapter extends RecyclerView.Adapter<RecyclerViewK
 
             super(itemView);
 
-            CustomerTextView = itemView.findViewById(R.id.kundeText4);
+            CustomerTextView = itemView.findViewById(R.id.kundeText2);
             MailTextView = itemView.findViewById(R.id.kundeText4);
 
         }

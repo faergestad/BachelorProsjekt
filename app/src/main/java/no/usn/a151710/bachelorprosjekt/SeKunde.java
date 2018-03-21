@@ -77,7 +77,7 @@ public class SeKunde extends AppCompatActivity {
         protected Long doInBackground(String... params) {
             HttpURLConnection connection = null;
             try{
-                URL kundeListeURL = new URL("http://10.0.2.2/BachelorProsjektNettsted/api.php/users?&transform=1");
+                URL kundeListeURL = new URL("http://10.0.2.2/BachelorProsjektNettsted/api.php/customer?&transform=1");
                 connection = (HttpURLConnection) kundeListeURL.openConnection();
                 connection.connect();
                 int status =  connection.getResponseCode();

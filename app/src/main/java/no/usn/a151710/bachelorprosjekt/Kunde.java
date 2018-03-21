@@ -14,7 +14,7 @@ public class Kunde {
     private String customerName, mail;
 
     private static String TABELL_NAVN = "customer";
-    private static String KOL_CUSTOMER_NAME = "cNAME";
+    private static String KOL_CUSTOMER_NAME = "cName";
     private static String KOL_MAIL = "mail";
 
     public Kunde(String customerName, String mail) {
