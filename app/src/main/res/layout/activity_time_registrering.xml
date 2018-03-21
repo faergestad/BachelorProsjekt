@@ -15,7 +15,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:format12Hour="hh:mm:ss"
-            android:text="00:00:00"
             android:layout_gravity="center"
             android:textSize="60sp"/>
 
@@ -23,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
         android:background="@color/cardview_dark_background"/>
 
     <LinearLayout
@@ -40,6 +41,7 @@
             android:id="@+id/start"
             android:src="@drawable/play" />
 
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_weight="1"
@@ -54,6 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
         android:background="@color/cardview_dark_background"/>
 
     <TextView
