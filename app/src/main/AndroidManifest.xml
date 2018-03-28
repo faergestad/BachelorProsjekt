@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="no.usn.a151710.bachelorprosjekt">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,9 +21,9 @@
         </activity>
         <activity android:name=".HovedSkjerm" />
         <activity android:name=".TimeRegistrering" />
-        <activity android:name=".Oppdrag" />
-        <activity android:name=".Kunde" />
-        <activity android:name=".Ansatt"></activity>
+        <activity android:name=".SeOppdrag" />
+        <activity android:name=".SeKunde" />
+        <activity android:name=".SeAnsatte"></activity>
     </application>
 
 </manifest>

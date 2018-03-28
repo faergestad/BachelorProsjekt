@@ -1,26 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="no.usn.a151710.bachelorprosjekt.TimeRegistrering"
-    android:orientation="vertical">
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="150dp"
+    android:orientation="vertical"
+    tools:context="no.usn.a151710.bachelorprosjekt.TimeRegistrering">
 
 
-    <ImageView
-        android:layout_width="87dp"
-        android:layout_height="68dp"
-        android:src="@drawable/play"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="190dp" />
+        <TextClock
+            android:id="@+id/clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format12Hour="hh:mm:ss"
+            android:layout_gravity="center"
+            android:textSize="60sp"/>
 
-    <ImageView
-        android:layout_width="87dp"
-        android:layout_height="68dp"
-        android:src="@drawable/stop"
-        tools:layout_editor_absoluteX="195dp"
-        tools:layout_editor_absoluteY="190dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/cardview_dark_background"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/start"
+            android:src="@drawable/play" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/stop"
+            android:layout_height="wrap_content"
+            android:src="@drawable/stop"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/cardview_dark_background"/>
+
+    <TextView
+        android:paddingTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Høgskolen i Sørøst-Norge, Bø i Telemark"
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
 
 
 </LinearLayout>

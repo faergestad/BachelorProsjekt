@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class HovedSkjerm extends AppCompatActivity {
 
@@ -41,17 +40,17 @@ public class HovedSkjerm extends AppCompatActivity {
                     break;
 
                 case R.id.oppdragKnapp:
-                    Intent startV2 = new Intent(v.getContext(), Oppdrag.class);
+                    Intent startV2 = new Intent(v.getContext(), SeOppdrag.class);
                     startActivity(startV2);
                     break;
 
                 case R.id.kundeKnapp:
-                    Intent startV3 = new Intent(v.getContext(), Kunde.class);
+                    Intent startV3 = new Intent(v.getContext(), SeKunde.class);
                     startActivity(startV3);
                     break;
 
                 case R.id.ansattKnapp:
-                    Intent startV4 = new Intent(v.getContext(), Ansatt.class);
+                    Intent startV4 = new Intent(v.getContext(), SeAnsatte.class);
                     startActivity(startV4);
                     break;
             }
