@@ -29,7 +29,7 @@ public class SeOppdrag extends AppCompatActivity {
     private ArrayList<Oppdrag> dataArray = new ArrayList<>();
     RecyclerView recyclerView;
     String name, address, mail, description, startDate, expDate;
-    int
+    int ;
 
     RecyclerView.LayoutManager recyclerViewLayoutManager;
     RecyclerViewAdapter recyclerViewAdapter;
@@ -49,10 +49,12 @@ public class SeOppdrag extends AppCompatActivity {
 
         SeOppdrag.LastOppdrag oppdragLaster = new LastOppdrag();
         oppdragLaster.execute();
+    }
+
 
 
     public void getOppdrag(ArrayList<Oppdrag> oppdragListe) {
-        dataAdapter new ArrayAdapter<>(this, R.layout.recyclerview3_items, oppdragListe);
+        dataAdapter = new ArrayAdapter<>(this, R.layout.recyclerview3_items, oppdragListe);
         for (int i = 0; i < oppdragListe.size(); i++) {
             Oppdrag oppdrag2 = new Oppdrag (name, address, mail, description, startDate, expDate);
             try {
