@@ -14,48 +14,51 @@ import java.util.Date;
 
 public class Oppdrag {
 
-    private int id, customerId;
-    private String service, address;
-    private Date startDate, expDate;
-    DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-    String strStartDate = df.format(startDate);
-    String strExpDate = df.format(expDate);
+    private int pID, serviceID;
+    private String name, address, mail, description, startDate, expDate;
 
     private static final String TABELL_NAVN = "project";
-    private static final String KOL_ID = "pID";
-    private static final String KOL_CUSTOMER_ID = "pCustomerID";
-    private static final String KOL_SERVICE = "service";
+    private static final String KOL_PID = "pID";
+    private static final String KOL_NAME = "name";
     private static final String KOL_ADDRESS = "address";
-    private static final String KOL_START_DATE = "startDate";
-    private static final String KOL_STOP_DATE = "expDate";
+    private static final String KOL_MAIL = "mail";
+    private static final String KOL_SERVICEID = "serviceId";
+    private static final String KOL_DESCRIPTION = "description";
+    private static final String KOL_STARTDATE = "startDate";
+    private static final String KOL_EXPDATE = "expDate";
 
-    public Oppdrag(int id, int customerId, String service, String address, Date startDate, Date expDate) {
-        this.id = id;
-        this.customerId = customerId;
-        this.service = service;
+    public Oppdrag(int pID, String name, String address, String mail, int serviceID, String description, String startDate, String expDate){
+        this.pID = pID;
+        this.name = name;
         this.address = address;
+        this.mail = mail;
+        this.serviceID = serviceID;
+        this.description = description;
         this.startDate = startDate;
         this.expDate = expDate;
+
     }
 
     public Oppdrag(JSONObject jsonOppdrag) {
-        this.id = jsonOppdrag.optInt(KOL_ID);
-        this.customerId = jsonOppdrag.optInt(KOL_CUSTOMER_ID);
-        this.service = jsonOppdrag.optString(KOL_SERVICE);
+        this.pID = jsonOppdrag.optInt(KOL_PID);
+        this.name = jsonOppdrag.optString(KOL_NAME);
         this.address = jsonOppdrag.optString(KOL_ADDRESS);
-        this.strStartDate = jsonOppdrag.optString((KOL_START_DATE));
-        this.strExpDate = jsonOppdrag.optString(KOL_STOP_DATE);
+        this.mail = jsonOppdrag.optString(KOL_MAIL);
+        this.serviceID = jsonOppdrag.optInt(KOL_SERVICEID);
+        this.description = jsonOppdrag.optString(KOL_DESCRIPTION);
+        this.startDate = jsonOppdrag.optString(KOL_STARTDATE);
+        this.expDate = jsonOppdrag.optString(KOL_EXPDATE);
     }
 
     public static ArrayList<Oppdrag> lagOppdragListe(String jsonOppdragString)
-            throws JSONException, NullPointerException {
+        throws JSONException, NullPointerException {
 
         ArrayList<Oppdrag> oppdragListe = new ArrayList<>();
         JSONObject jsonData = new JSONObject(jsonOppdragString);
         JSONArray jsonOppdragTabell = jsonData.optJSONArray(TABELL_NAVN);
         for (int i = 0; i < jsonOppdragTabell.length(); i++) {
-            JSONObject jsonOppdrag= (JSONObject) jsonOppdragTabell.get(i);
-            Oppdrag detteOppdrag  = new Oppdrag((jsonOppdrag));
+            JSONObject jsonOppdrag = (JSONObject) jsonOppdragTabell.get(i);
+            Oppdrag detteOppdrag = new Oppdrag((jsonOppdrag));
             oppdragListe.add((detteOppdrag));
         }
         return oppdragListe;
@@ -65,40 +68,42 @@ public class Oppdrag {
         JSONObject jsonOppdrag = new JSONObject();
 
         try {
-            jsonOppdrag.put(KOL_ID, this.id);
-            jsonOppdrag.put(KOL_CUSTOMER_ID, this.customerId);
-            jsonOppdrag.put(KOL_SERVICE, this.service);
+            jsonOppdrag.put(KOL_PID, this.pID);
+            jsonOppdrag.put(KOL_NAME, this.name);
             jsonOppdrag.put(KOL_ADDRESS, this.address);
-            jsonOppdrag.put(KOL_START_DATE, this.startDate);
-            jsonOppdrag.put(KOL_STOP_DATE, this.expDate);
+            jsonOppdrag.put(KOL_MAIL, this.mail);
+            jsonOppdrag.put(KOL_SERVICEID, this.serviceID);
+            jsonOppdrag.put(KOL_DESCRIPTION, this.description);
+            jsonOppdrag.put(KOL_STARTDATE, this.startDate);
+            jsonOppdrag.put(KOL_EXPDATE, this.expDate);
         } catch (JSONException e) {
             return null;
         }
         return jsonOppdrag;
     }
 
-    public int getId() {
-        return id;
+    public int getpID() {
+        return pID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setpID(int pID) {
+        this.pID = pID;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getServiceID() {
+        return serviceID;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setServiceID(int serviceID) {
+        this.serviceID = serviceID;
     }
 
-    public String getService() {
-        return service;
+    public String getName() {
+        return name;
     }
 
-    public void setService(String service) {
-        this.service = service;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -109,19 +114,35 @@ public class Oppdrag {
         this.address = address;
     }
 
-    public Date getStartDate() {
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getExpDate() {
+    public String getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(Date expDate) {
+    public void setExpDate(String expDate) {
         this.expDate = expDate;
     }
 }

@@ -25,14 +25,14 @@ import java.util.List;
 public class SeOppdrag extends AppCompatActivity {
 
     List<Oppdrag> oppdrag1;
-    ArrayAdapter<Oppdrag> dataAdapter:null;
+    ArrayAdapter<Oppdrag> dataAdapter = null;
     private ArrayList<Oppdrag> dataArray = new ArrayList<>();
     RecyclerView recyclerView;
     String name, address, mail, description, startDate, expDate;
-    int ;
+    int pID, serviceID;
 
     RecyclerView.LayoutManager recyclerViewLayoutManager;
-    RecyclerViewAdapter recyclerViewAdapter;
+    RecyclerView.Adapter recyclerViewAdapter;
 
 
     @Override
@@ -56,12 +56,14 @@ public class SeOppdrag extends AppCompatActivity {
     public void getOppdrag(ArrayList<Oppdrag> oppdragListe) {
         dataAdapter = new ArrayAdapter<>(this, R.layout.recyclerview3_items, oppdragListe);
         for (int i = 0; i < oppdragListe.size(); i++) {
-            Oppdrag oppdrag2 = new Oppdrag (name, address, mail, description, startDate, expDate);
+            Oppdrag oppdrag2 = new Oppdrag(pID,name,address, mail, serviceID, description, startDate, expDate);
             try {
                 Oppdrag data1 = oppdragListe.get(i);
+                oppdrag2.setpID(data1.getpID());
                 oppdrag2.setName(data1.getName());
                 oppdrag2.setAddress(data1.getAddress());
                 oppdrag2.setMail(data1.getMail());
+                oppdrag2.setServiceID(data1.getServiceID());
                 oppdrag2.setDescription(data1.getDescription());
                 oppdrag2.setStartDate(data1.getStartDate());
                 oppdrag2.setExpDate(data1.getExpDate());
@@ -70,22 +72,24 @@ public class SeOppdrag extends AppCompatActivity {
             }
             oppdrag1.add(oppdrag2);
         }
-        recyclerViewAdapter = new RecyclerView.Adapter(oppdrag1, this);
+        recyclerViewAdapter = new RecyclerViewOppdragAdapter(oppdrag1, this);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
-    public class LastOppdrag extends AsyncTask , String , Long > {
+   public class LastOppdrag extends AsyncTask<String , String , Long> {
+
         @Override
         protected void onPreExecute() {
-    }
 
-    @Override
-    protected Long doInBackground(String... params) {
+        }
+
+       @Override
+       protected Long doInBackground(String... params) {
             HttpURLConnection connection = null;
             try{
-                URL oppdragListeURL = new URL("http://10.0.2.2/BachelorProsjektNettsted/api.php/project?&transform=1");
+                URL oppdragListeURL = new URL( "http://10.0.2.2/BachelorProsjektNettsted/api.php/project?&transform=1");
                 connection = (HttpURLConnection) oppdragListeURL.openConnection();
-                connection .connect();
+                connection.connect();
                 int status = connection.getResponseCode();
                 if (status == HttpURLConnection.HTTP_OK) {
                     InputStream is = connection.getInputStream();
@@ -96,8 +100,8 @@ public class SeOppdrag extends AppCompatActivity {
                         sb = sb.append(responseString);
                     }
                     String oppdragData = sb.toString();
-                    dataArray = Ansatt.lagOppdragListe(oppdragData);
-                    return (0L);
+                    dataArray = Oppdrag.lagOppdragListe(oppdragData);
+                    return (0l);
                 } else {
                     return (1L);
                 }
@@ -116,16 +120,16 @@ public class SeOppdrag extends AppCompatActivity {
             } finally {
                 connection.disconnect();
             }
-        }
+       }
 
-        @Override
-                protected void onPostExecute(Long result) {
+       @Override
+       protected void onPostExecute(Long result) {
             if (result == 0) {
-                getOppdrag (dataArray);
+                getOppdrag(dataArray);
             } else {
-                Log.d("Feil : ", "feil på databasen");
+                Log.d("Feil: ", "Feil på databasen");
             }
-        }
-    }
+       }
+   }
 
 }

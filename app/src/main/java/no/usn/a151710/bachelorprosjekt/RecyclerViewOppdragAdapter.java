@@ -13,7 +13,7 @@ import java.util.List;
  * Created by GeorgPersen on 21.03.2018.
  */
 
-public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerViewOppdragAdapter> {
+public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerViewOppdragAdapter.ViewHolder> {
 
     Context context;
     List<Oppdrag> oppdrag;
@@ -37,6 +37,7 @@ public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
     }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
