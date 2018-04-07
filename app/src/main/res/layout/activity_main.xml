@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/backgroundred"
     tools:context="no.usn.a151710.bachelorprosjekt.MainActivity" >
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:contentDescription="@string/logoDescription"
-        android:src="@drawable/hsnlogo" />
+        android:src="@drawable/logohsn" />
 
     <EditText
         android:id="@+id/userField"
