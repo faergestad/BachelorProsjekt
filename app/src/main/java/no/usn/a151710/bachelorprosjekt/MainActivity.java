@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText skrivBrukernavn;
     private EditText skrivPassord;
     private Switch huskMeg;
-    private Button loginBtn;
+    private ImageButton loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         skrivBrukernavn = findViewById(R.id.userField);
         skrivPassord = findViewById(R.id.passField);
-        huskMeg = findViewById(R.id.rememberSwitch);
         loginBtn = findViewById(R.id.loginBtn);
 
         loginBtn.setOnClickListener(onClickListener);
