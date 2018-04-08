@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/backgroundred"
+    android:background="@drawable/backgroundhsn"
     tools:context="no.usn.a151710.bachelorprosjekt.MainActivity">
 
     <ImageView
@@ -68,17 +68,13 @@
 
     </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/logginn"
             android:id="@+id/loginBtn"
             android:backgroundTint="@android:color/transparent" />
 
-        </LinearLayout>
 
 </LinearLayout>
