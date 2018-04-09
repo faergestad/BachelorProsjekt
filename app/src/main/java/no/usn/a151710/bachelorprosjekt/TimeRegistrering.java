@@ -1,7 +1,9 @@
 package no.usn.a151710.bachelorprosjekt;
 
 import android.Manifest;
-        import android.content.Context;
+import android.app.LauncherActivity;
+import android.app.ProgressDialog;
+import android.content.Context;
         import android.content.pm.PackageManager;
         import android.graphics.Color;
         import android.location.Address;
@@ -9,6 +11,7 @@ import android.Manifest;
         import android.location.Geocoder;
         import android.location.Location;
         import android.location.LocationManager;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Build;
         import android.os.Bundle;
@@ -20,7 +23,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-        import com.google.android.gms.common.ConnectionResult;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
         import com.google.android.gms.common.api.GoogleApiClient;
         import com.google.android.gms.location.LocationListener;
         import com.google.android.gms.location.LocationRequest;
@@ -58,22 +70,23 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private static final String TAG = "Feil: ";
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
-    TextView lokasjon;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    ArrayList<LatLng> lokasjoner = new ArrayList<>();
     LatLng huset = new LatLng(59.414349, 9.058793);
     private GoogleMap mMap;
+    private ProgressDialog pDialog;
+    ArrayList<String> latList = new ArrayList<>();
+    ArrayList<String> lngList = new ArrayList<>();
+    private static final String URL_DATA = "http://192.168.10.172/BachelorProsjektNettsted/api.php/latlong?&transform=1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_registrering);
-
-        lokasjon = findViewById(R.id.lokasjontxt);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -82,98 +95,47 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                 getSupportFragmentManager()
                         .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        getJSON("http://10.0.2.2/getdata.php");
-    }
-
-    //this method is actually fetching the json string
-    private void getJSON(final String urlWebService) {
-        /*
-         * As fetching the json string is a network operation
-         * And we cannot perform a network operation in main thread
-         * so we need an AsyncTask
-         * The constrains defined here are
-         * Void -> We are not passing anything
-         * Void -> Nothing at progress update as well
-         * String -> After completion it should return a string and it will be the json string
-         * */
-        class GetJSON extends AsyncTask<Void, Void, String> {
-
-            //this method will be called before execution
-            //you can display a progress bar or something
-            //so that user can understand that he should wait
-            //as network operation may take some time
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            //this method will be called after execution
-            //so here we are displaying a toast with the json string
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                lokasjon.setText(s);
-                try {
-                    lastkoordinater(s);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                /* Hardkodet sirkel
-                Circle circle = mMap.addCircle(new CircleOptions()
-                        .center(huset)
-                        .radius(10)
-                        .strokeColor(0x440000FF)
-                        .strokeWidth(2)
-                        .fillColor(0x220000FF));
-                */
-            }
-
-            //in this method we are fetching the json string
-            @Override
-            protected String doInBackground(Void... voids) {
 
 
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, URL_DATA, null, new Response.Listener<JSONObject>() {
 
-                try {
-                    //creating a URL
-                    URL url = new URL(urlWebService);
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
 
-                    //Opening the URL using HttpURLConnection
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                            JSONArray jsonArray = response.getJSONArray("latlong");
 
-                    //StringBuilder object to read the string from the service
-                    StringBuilder sb = new StringBuilder();
+                            for(int i=0; i < jsonArray.length(); i++) {
+                                JSONObject jsonobject = jsonArray.getJSONObject(i);
+                                latList.add(jsonobject.getString("lat"));
+                                lngList.add(jsonobject.getString("lng"));
+                            }
 
-                    //We will use a buffered reader to read the string from service
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                            for(int i = 0; i < latList.size(); i++) {
+                                Circle circle = mMap.addCircle(new CircleOptions()
+                                        .center(new LatLng(Double.valueOf(latList.get(i)),Double.valueOf(lngList.get(i))))
+                                        .radius(20)
+                                        .strokeColor(0x440000FF)
+                                        .strokeWidth(2)
+                                        .fillColor(0x220000FF));
+                            }
 
-                    //A simple string to read values from each line
-                    String json;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                    //reading until we don't find null
-                    while ((json = bufferedReader.readLine()) != null) {
-
-                        //appending it to string builder
-                        sb.append(json + "\n");
                     }
+                }, new Response.ErrorListener() {
 
-                    //finally returning the read string
-                    return sb.toString().trim();
-                } catch (Exception e) {
-                    return null;
-                }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
 
-            }
-        }
-
-        //creating asynctask object and executing it
-        GetJSON getJSON = new GetJSON();
-        getJSON.execute();
-    }
-
-    private void lastkoordinater(String json) throws JSONException {
-
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
     }
 
 
@@ -188,23 +150,13 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                     == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
-
-                /*Circle circle = mMap.addCircle(new CircleOptions()
+                /* Mal for å lage sirkler på kartet
+                Circle circle = mMap.addCircle(new CircleOptions()
                         .center(huset)
                         .radius(10)
                         .strokeColor(0x440000FF)
                         .strokeWidth(2)
                         .fillColor(0x220000FF));*/
-
-                for (int i = 0; i < lokasjoner.size(); i++) {
-                    Circle circle = mMap.addCircle(new CircleOptions()
-                            .center(lokasjoner.get(i))
-                            .radius(10)
-                            .strokeColor(0x440000FF)
-                            .strokeWidth(2)
-                            .fillColor(0x220000FF));
-                }
-
             }
 
         } else {
