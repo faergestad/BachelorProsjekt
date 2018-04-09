@@ -9,6 +9,10 @@
     android:orientation="vertical"
     tools:context="no.usn.a151710.bachelorprosjekt.TimeRegistrering">
 
+    <TextView
+        android:id="@+id/lokasjontxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
         <TextClock
             android:id="@+id/clock"

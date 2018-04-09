@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), HovedSkjerm.class);
             startActivity(intent);
-            String melding = "Success";
+            /*String melding = "Success";
             Toast meldingsToast = Toast.makeText(getApplicationContext(), melding, Toast.LENGTH_LONG);
-            meldingsToast.show();
+            meldingsToast.show();*/
         }
     };
 
