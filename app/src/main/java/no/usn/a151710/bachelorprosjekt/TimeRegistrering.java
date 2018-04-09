@@ -96,7 +96,10 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                         .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        hentKoordinater();
+    }
 
+    public void hentKoordinater() {
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, URL_DATA, null, new Response.Listener<JSONObject>() {
 
@@ -106,15 +109,15 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
 
                             JSONArray jsonArray = response.getJSONArray("latlong");
 
-                            for(int i=0; i < jsonArray.length(); i++) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
                                 latList.add(jsonobject.getString("lat"));
                                 lngList.add(jsonobject.getString("lng"));
                             }
 
-                            for(int i = 0; i < latList.size(); i++) {
+                            for (int i = 0; i < latList.size(); i++) {
                                 Circle circle = mMap.addCircle(new CircleOptions()
-                                        .center(new LatLng(Double.valueOf(latList.get(i)),Double.valueOf(lngList.get(i))))
+                                        .center(new LatLng(Double.valueOf(latList.get(i)), Double.valueOf(lngList.get(i))))
                                         .radius(20)
                                         .strokeColor(0x440000FF)
                                         .strokeWidth(2)
@@ -137,7 +140,6 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsObjRequest);
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
