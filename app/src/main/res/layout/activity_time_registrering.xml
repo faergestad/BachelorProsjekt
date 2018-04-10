@@ -9,14 +9,18 @@
     android:orientation="vertical"
     tools:context="no.usn.a151710.bachelorprosjekt.TimeRegistrering">
 
+    <TextView
+        android:id="@+id/antTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-        <TextClock
-            android:id="@+id/clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:format12Hour="hh:mm:ss"
-            android:layout_gravity="center"
-            android:textSize="60sp"/>
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="60sp"
+        android:text="00:00:00"/>
 
     <View
         android:layout_width="match_parent"
@@ -34,20 +38,22 @@
         android:paddingBottom="20dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/start"
-            android:src="@drawable/play" />
+            android:src="@drawable/play"
+            android:background="@null"/>
 
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:id="@+id/stop"
             android:layout_height="wrap_content"
-            android:src="@drawable/stop"/>
+            android:src="@drawable/stop"
+            android:background="@null"/>
 
     </LinearLayout>
 
