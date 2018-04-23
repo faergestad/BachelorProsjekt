@@ -6,4 +6,16 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="ansatt_trans">Ansatt transition</string>
+    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Georg F. Persen</string>
+    <string name="nav_header_subtitle">georg.f.persen@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main"></string>
 </resources>

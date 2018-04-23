@@ -3,79 +3,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
-    android:paddingTop="130dp"
+    android:background="@drawable/backgroundhsn"
     android:orientation="vertical"
     tools:context="no.usn.a151710.bachelorprosjekt.TimeRegistrering">
-
-    <TextView
-        android:id="@+id/antTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="60sp"
-        android:text="00:00:00"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:background="@color/cardview_dark_background"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:paddingTop="30dp"
-        android:paddingBottom="20dp"
+        android:background="#4646a5"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/timereg"
+            android:transitionName="time_trans" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/start"
-            android:src="@drawable/play"
-            android:background="@null"/>
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_thin"
+            android:text="Arbeidsplass: "
+            android:textColor="#FFFF"
+            android:textSize="20sp" />
 
-
-        <ImageButton
+        <TextView
+            android:id="@+id/timeregPlace"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/stop"
             android:layout_height="wrap_content"
-            android:src="@drawable/stop"
-            android:background="@null"/>
+            android:layout_gravity="center"
+            android:text=""
+            android:textColor="#FFFF"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginBottom="11dp"
-        android:background="@color/cardview_dark_background"/>
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="11dp"
-        tools:context="no.usn.a151710.bachelorprosjekt.TimeRegistrering" />
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="10dp">
 
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="11dp"
+            tools:context="no.usn.a151710.bachelorprosjekt.TimeRegistrering" />
+
+        <TextView
+            android:id="@+id/timer"
+            android:paddingTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Timeregistrering"
+            android:fontFamily="@font/roboto_thin"
+            android:textColor="#FFFF"
+            android:textSize="40sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="10dp"
+            android:background="#FFFF" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingTop="30dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="5dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:background="@drawable/rounded_button_green"
+                android:fontFamily="@font/roboto_light"
+                android:text="START"
+                android:textColor="#FFFF"/>
+
+
+            <Button
+                android:id="@+id/stop"
+                android:layout_width="5dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_red"
+                android:fontFamily="@font/roboto_light"
+                android:text="STOPP"
+                android:textColor="#FFFF"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

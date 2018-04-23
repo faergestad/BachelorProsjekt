@@ -1,5 +1,6 @@
 package no.usn.a151710.bachelorprosjekt;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +32,7 @@ public class SeOppdrag extends AppCompatActivity {
     RecyclerView recyclerView;
     String name, address, mail, description, startDate, expDate;
     int pID, serviceID;
+    public static TextView arbeidsplass;
 
     RecyclerView.LayoutManager recyclerViewLayoutManager;
     RecyclerView.Adapter recyclerViewAdapter;
@@ -46,6 +49,12 @@ public class SeOppdrag extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerViewLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Arbeidsplass", 0);
+        String name = sharedPreferences.getString("Firma", "");
+
+        arbeidsplass = findViewById(R.id.oppdragPlace);
+        arbeidsplass.setText(name);
 
         SeOppdrag.LastOppdrag oppdragLaster = new LastOppdrag();
         oppdragLaster.execute();
@@ -87,7 +96,8 @@ public class SeOppdrag extends AppCompatActivity {
        protected Long doInBackground(String... params) {
             HttpURLConnection connection = null;
             try{
-                URL oppdragListeURL = new URL( "http://10.0.2.2/BachelorProsjektNettsted/api.php/project?&transform=1");
+                //URL oppdragListeURL = new URL( "http://10.0.2.2/BachelorProsjektNettsted/api.php/project?&transform=1");
+                URL oppdragListeURL = new URL("http://gakk.one/appOppdrag.php");
                 connection = (HttpURLConnection) oppdragListeURL.openConnection();
                 connection.connect();
                 int status = connection.getResponseCode();

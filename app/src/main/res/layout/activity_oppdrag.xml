@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="no.usn.a151710.bachelorprosjekt.SeAnsatte">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4646a5"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/oppdrag"
+            android:transitionName="oppdrag_trans"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_thin"
+            android:text="Arbeidsplass: "
+            android:textSize="20sp"
+            android:textColor="#FFFF"/>
+
+        <TextView
+            android:id="@+id/oppdragPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text=""
+            android:textColor="#FFFF"/>
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:transitionName="oppdrag_open"/>
 
-</RelativeLayout>
+</LinearLayout>
