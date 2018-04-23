@@ -19,19 +19,15 @@ import java.util.List;
 
 public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerViewOppdragAdapter.ViewHolder> {
 
-    Context context;
-    List<Oppdrag> oppdrag;
+    private Context context;
+    private List<Oppdrag> oppdragliste;
+
     public SharedPreferences prefWorkPlace;
-    int arbeidsplass;
 
-    public RecyclerViewOppdragAdapter(List<Oppdrag> oppdrag, Context context) {
-
+    public RecyclerViewOppdragAdapter(Context context, List<Oppdrag> liste) {
         super();
-
-        this.oppdrag = oppdrag;
         this.context = context;
-
-
+        this.oppdragliste = liste;
     }
 
     @Override
@@ -48,14 +44,14 @@ public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final Oppdrag oppdrag1 = oppdrag.get(position);
+        final Oppdrag oppdrag1 = oppdragliste.get(position);
 
         holder.NameTextView.setText(oppdrag1.getName());
         holder.AddressTextView.setText(oppdrag1.getAddress());
         holder.MailTextView.setText(oppdrag1.getMail());
         holder.DescriptionTextView.setText(oppdrag1.getDescription());
         holder.StartDateTextView.setText(oppdrag1.getStartDate());
-        holder.ExpDateTextView.setText(oppdrag1.getStartDate());
+        holder.ExpDateTextView.setText(oppdrag1.getExpDate());
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +77,7 @@ public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public int getItemCount() { return oppdrag.size(); }
+    public int getItemCount() { return oppdragliste.size(); }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -101,7 +97,7 @@ public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerVie
             MailTextView = itemView.findViewById(R.id.oppdragText6);
             DescriptionTextView = itemView.findViewById(R.id.oppdragText8);
             StartDateTextView = itemView.findViewById(R.id.oppdragText10);
-            ExpDateTextView = itemView.findViewById(R.id.oppdragText12);
+            ExpDateTextView = itemView.findViewById(R.id.oppdragSlutt);
             linearLayout = itemView.findViewById(R.id.cardview3);
 
         }

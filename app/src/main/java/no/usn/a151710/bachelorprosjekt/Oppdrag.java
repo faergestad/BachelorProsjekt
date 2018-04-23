@@ -27,17 +27,7 @@ public class Oppdrag {
     private static final String KOL_STARTDATE = "startDate";
     private static final String KOL_EXPDATE = "expDate";
 
-    public Oppdrag(int pID, String name, String address, String mail, int serviceID, String description, String startDate, String expDate){
-        this.pID = pID;
-        this.name = name;
-        this.address = address;
-        this.mail = mail;
-        this.serviceID = serviceID;
-        this.description = description;
-        this.startDate = startDate;
-        this.expDate = expDate;
 
-    }
 
     public Oppdrag(JSONObject jsonOppdrag) {
         this.pID = jsonOppdrag.optInt(KOL_PID);
@@ -48,38 +38,6 @@ public class Oppdrag {
         this.description = jsonOppdrag.optString(KOL_DESCRIPTION);
         this.startDate = jsonOppdrag.optString(KOL_STARTDATE);
         this.expDate = jsonOppdrag.optString(KOL_EXPDATE);
-    }
-
-    public static ArrayList<Oppdrag> lagOppdragListe(String jsonOppdragString)
-        throws JSONException, NullPointerException {
-
-        ArrayList<Oppdrag> oppdragListe = new ArrayList<>();
-        JSONObject jsonData = new JSONObject(jsonOppdragString);
-        JSONArray jsonOppdragTabell = jsonData.optJSONArray(TABELL_NAVN);
-        for (int i = 0; i < jsonOppdragTabell.length(); i++) {
-            JSONObject jsonOppdrag = (JSONObject) jsonOppdragTabell.get(i);
-            Oppdrag detteOppdrag = new Oppdrag((jsonOppdrag));
-            oppdragListe.add((detteOppdrag));
-        }
-        return oppdragListe;
-    }
-
-    public JSONObject lagJSONObject () {
-        JSONObject jsonOppdrag = new JSONObject();
-
-        try {
-            jsonOppdrag.put(KOL_PID, this.pID);
-            jsonOppdrag.put(KOL_NAME, this.name);
-            jsonOppdrag.put(KOL_ADDRESS, this.address);
-            jsonOppdrag.put(KOL_MAIL, this.mail);
-            jsonOppdrag.put(KOL_SERVICEID, this.serviceID);
-            jsonOppdrag.put(KOL_DESCRIPTION, this.description);
-            jsonOppdrag.put(KOL_STARTDATE, this.startDate);
-            jsonOppdrag.put(KOL_EXPDATE, this.expDate);
-        } catch (JSONException e) {
-            return null;
-        }
-        return jsonOppdrag;
     }
 
     public int getpID() {

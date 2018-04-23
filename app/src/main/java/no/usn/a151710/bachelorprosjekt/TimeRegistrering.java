@@ -384,7 +384,7 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                         mMap.setMyLocationEnabled(true);
                     }
                 } else {
-                    Toast.makeText(this, "permission denied",
+                    Toast.makeText(this, "Tillatelse ikke gitt",
                             Toast.LENGTH_LONG).show();
                 }
             }

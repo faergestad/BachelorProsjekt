@@ -1,116 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardview3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cardview3">
+    android:layout_margin="13dp"
+    android:orientation="vertical">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TableRow>
-            <TextView
-                android:id="@+id/oppdragText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="Firma: "/>
+
+        <LinearLayout
+            android:id="@+id/linje1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
 
             <TextView
                 android:id="@+id/oppdragText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:text="FirmaNavn her"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="FirmaNavn her"/>
-        </TableRow>
+                android:textColor="#FFFF"/>
 
-        <TableRow>
-            <TextView
-                android:id="@+id/oppdragText3"
-                android:layout_width="wrap_content"
+        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linje2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="Adresse: "/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/oppdragText4"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="AdresseNavn her"/>
-        </TableRow>
 
-        <TableRow>
-            <TextView
-                android:id="@+id/oppdragText5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="E-post: " />
 
-            <TextView
-                android:id="@+id/oppdragText6"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="KundeMail her" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/oppdragText4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_thin"
+                    android:text="AdresseNavn her"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="#FFFF"/>
 
-        <TableRow>
-            <TextView
-                android:id="@+id/oppdragText7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="Beskrivelse: "/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/oppdragText8"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="OppdragBeskrivelse her"/>
-        </TableRow>
 
-        <TableRow>
-            <TextView
-                android:id="@+id/oppdragText9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="Startdato: "/>
+    <LinearLayout
+        android:id="@+id/linje3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/oppdragText10"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="StartDato her"/>
-        </TableRow>
 
-        <TableRow>
-            <TextView
-                android:id="@+id/oppdragText11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="Sluttdato: "/>
 
-            <TextView
-                android:id="@+id/oppdragText12"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="SluttDato her"/>
-        </TableRow>
+        <TextView
+            android:id="@+id/oppdragText6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_thin"
+            android:text="KundeMail her"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="#FFFF" />
 
-        <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/cardview_dark_background"></View>
-    </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linje4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="9dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/oppdragText9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start: "
+            android:textColor="#339900"/>
+
+        <TextView
+            android:id="@+id/oppdragText10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="13dp"
+            android:text="2018-02-05"
+            android:textColor="#FFFF"/>
+
+        <TextView
+            android:id="@+id/oppdragText11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Slutt: "
+            android:textColor="#9b3939"/>
+
+        <TextView
+            android:id="@+id/oppdragSlutt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Slutt her"
+            android:textColor="#FFFF"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/oppdragText7"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Beskrivelse: "
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="#FFFF"/>
+
+        <TextView
+            android:id="@+id/oppdragText8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OppdragBeskrivelse her"
+            android:fontFamily="@font/roboto_thin"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="#FFFF"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FFFF"/>
 
 </LinearLayout>
