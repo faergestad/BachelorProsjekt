@@ -3,6 +3,7 @@ package no.usn.a151710.bachelorprosjekt;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class HovedSkjerm extends AppCompatActivity {
 
@@ -19,11 +21,15 @@ public class HovedSkjerm extends AppCompatActivity {
     ImageView oppdragKnapp;
     ImageView kundeKnapp;
     ImageView ansattKnapp;
+    SharedPreferences pref, userPref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoved_skjerm);
+
+        pref = getSharedPreferences("Arbeidsplass", 0);
 
         timeRegKnapp    = findViewById(R.id.timeregbtn);
         oppdragKnapp    = findViewById(R.id.oppdragbtn);
@@ -34,6 +40,9 @@ public class HovedSkjerm extends AppCompatActivity {
         oppdragKnapp.setOnClickListener(onClickListener);
         kundeKnapp.setOnClickListener(onClickListener);
         ansattKnapp.setOnClickListener(onClickListener);
+
+        userPref = getSharedPreferences("login", 0);
+        editor = userPref.edit();
 
     }
 
@@ -66,4 +75,14 @@ public class HovedSkjerm extends AppCompatActivity {
         }
     };
 
+    public void logout(View view) {
+        editor.putString("uID", "");
+        editor.putString("password", "");
+        editor.commit();
+
+        Toast.makeText(HovedSkjerm.this, "Du har blitt logget ut", Toast.LENGTH_SHORT).show();
+
+        Intent loggUt = new Intent(HovedSkjerm.this, LoginActivity.class);
+        startActivity(loggUt);
+    }
 }

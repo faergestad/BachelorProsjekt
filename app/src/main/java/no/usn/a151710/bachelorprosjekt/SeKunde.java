@@ -1,5 +1,8 @@
 package no.usn.a151710.bachelorprosjekt;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +10,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,107 +33,86 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by GeorgPersen on 09.03.2018.
  */
 
 public class SeKunde extends AppCompatActivity {
 
-    List<Kunde> kunde1;
-    ArrayAdapter<Kunde> dataAdapter = null;
-    private ArrayList<Kunde> dataArray = new ArrayList<>();
-    RecyclerView recyclerView;
-    String customerName, email;
+    private RecyclerView mRecyclerview;
+    private LinearLayoutManager linearLayoutManager;
+    private List<Kunde> kundeListe;
+    private RecyclerView.Adapter adapter;
 
-    RecyclerView.LayoutManager recylerViewLayoutManager;
-    RecyclerView.Adapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kunde);
 
-        kunde1 = new ArrayList<>();
+        mRecyclerview = findViewById(R.id.recyclerView2);
 
-        recyclerView = findViewById(R.id.recyclerView2);
-        recyclerView.setHasFixedSize(true);
-        recylerViewLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(recylerViewLayoutManager);
+        kundeListe = new ArrayList<>();
+        adapter = new RecyclerViewKundeAdapter(this, kundeListe);
 
-        SeKunde.LastKunde kundeLaster = new LastKunde();
-        kundeLaster.execute();
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        mRecyclerview.setHasFixedSize(true);
+        mRecyclerview.setLayoutManager(linearLayoutManager);
+        mRecyclerview.setAdapter(adapter);
+
+        getData();
     }
 
-    public void getKunde(ArrayList<Kunde> kundeListe) {
-        dataAdapter = new ArrayAdapter<>(this, R.layout.recylerview2_items, kundeListe);
-        for (int i = 0; i < kundeListe.size(); i++) {
-            Kunde kunde2 = new Kunde(customerName, email);
-            try {
-                Kunde data1 = kundeListe.get(i);
-                kunde2.setCustomerName(data1.getCustomerName());
-                kunde2.setMail(data1.getMail());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            kunde1.add(kunde2);
-        }
-        recyclerViewAdapter = new RecyclerViewKundeAdapter(kunde1, this);
-        recyclerView.setAdapter(recyclerViewAdapter);
-    }
+    private void getData() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Laster...");
+        progressDialog.show();
 
-    public class LastKunde extends AsyncTask<String , String , Long > {
-        @Override
-        protected void onPreExecute() {
-        }
+        final String JSON_URL = "http://gakk.one/appKunde.php";
 
-        @Override
-        protected Long doInBackground(String... params) {
-            HttpURLConnection connection = null;
-            try{
-                URL kundeListeURL = new URL("http://10.0.2.2/BachelorProsjektNettsted/api.php/customer?&transform=1");
-                connection = (HttpURLConnection) kundeListeURL.openConnection();
-                connection.connect();
-                int status =  connection.getResponseCode();
-                if (status == HttpURLConnection.HTTP_OK) {
-                    InputStream is = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                    String responseString;
-                    StringBuilder sb = new StringBuilder();
-                    while ((responseString = reader.readLine()) != null) {
-                        sb = sb.append(responseString);
-                    }
-                    String kundeData = sb.toString();
-                    dataArray = Kunde.lagKundeListe(kundeData);
-                    return (0L);
-                } else {
-                    return (1L);
+        StringRequest jsonStringRequest = new StringRequest(JSON_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return (1L);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return (1L);
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                return (1L);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return (1L);
-            } finally {
-                connection.disconnect();
-            }
-        }
+                JSONArray jsonKundeArray = jsonObject.optJSONArray("kunde");
 
-        @Override
-        protected void onPostExecute(Long result) {
-            if (result == 0) {
-                getKunde(dataArray);
-            } else {
-                Log.d("Feil: ", "feil på databasen");
+                for (int i = 0; i < jsonKundeArray.length(); i++) {
+                    try {
+                        JSONObject jsonKunde = (JSONObject)jsonKundeArray.get(i);
+                        Kunde kunde = new Kunde(jsonKunde);
+
+                        kunde.setCustomerName(jsonKunde.getString("cName"));
+                        kunde.setMail(jsonKunde.getString("mail"));
+
+                        kundeListe.add(kunde);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        progressDialog.dismiss();
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley", error.toString());
+                progressDialog.dismiss();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonStringRequest);
     }
 
 }

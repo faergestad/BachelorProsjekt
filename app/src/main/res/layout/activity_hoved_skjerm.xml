@@ -31,6 +31,7 @@
 
         <ImageView
             android:id="@+id/timeregbtn"
+            android:paddingTop="10dp"
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:src="@drawable/timereg"/>
@@ -84,6 +85,7 @@
         <ImageView
             android:id="@+id/oppdragbtn"
             android:layout_width="180dp"
+            android:paddingLeft="5dp"
             android:layout_height="180dp"
             android:src="@drawable/oppdrag"/>
 
@@ -101,6 +103,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_thin"
             android:textColor="#FFFFFF"
+            android:paddingLeft="10dp"
             android:text="Kunder"
             android:textAlignment="center"
             android:textSize="18sp"/>
@@ -116,6 +119,22 @@
             android:textSize="18sp"/>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/logout"
+            android:alpha="0.6"
+            android:onClick="logout"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
 

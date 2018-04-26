@@ -76,7 +76,7 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
     public static final long MILLIS_TO_HOURS = 3600000;
     long mStartTime = System.currentTimeMillis();
     long storedStart;
-    SharedPreferences pref;
+    SharedPreferences pref, place;
     // Brukt for å teste add.circle på map
     LatLng huset = new LatLng(59.414349, 9.058793);
     ArrayList<String> latList = new ArrayList<>();
@@ -93,7 +93,7 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
         btnStart = findViewById(R.id.start);
         btnStop = findViewById(R.id.stop);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Arbeidsplass", 0);
+        final SharedPreferences sharedPreferences = getSharedPreferences("Arbeidsplass", 0);
         String name = sharedPreferences.getString("Firma", "");
         final int pID = sharedPreferences.getInt("pID", 0);
 
@@ -111,11 +111,13 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
 
         /*
         Timerrelatert
-        Setter startTimer til 0, så appen ikke krasjer hvis brukeren trykker stopp før start */
+        Setter startTimer til 0 hvis timer ikke er startet, så appen ikke krasjer hvis brukeren trykker stopp før start */
         pref = getApplicationContext().getSharedPreferences("Timer", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putLong("startTimer", 0);
-        editor.apply();
+        if (pref.getLong("startTimer", 0) == 0) {
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putLong("startTimer", 0);
+            editor.apply();
+        }
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,14 +128,21 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                 pref = getApplicationContext().getSharedPreferences("Timer", 0); // 0 - for private mode
                 SharedPreferences.Editor editor = pref.edit();
 
-                // gjør så brukeren ikke kan nullstille telleren ved å trykke start
-                // hvis startTimer ikke er 0
-                if (pref.getLong("startTimer", 0) == 0) {
-                    editor.putLong("startTimer", storedStart);
-                    Toast.makeText(mContext, "Timeregistrering startet",Toast.LENGTH_SHORT).show();
-                    editor.apply();
+                place = getApplicationContext().getSharedPreferences("Arbeidsplass", 0);
+                String sjekk = "";
+
+                if (place.getString("Firma", "") == sjekk) {
+                    Toast.makeText(mContext, "Du har ikke valgt oppdrag", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mContext, "Du har allerede startet",Toast.LENGTH_SHORT).show();
+                    // gjør så brukeren ikke kan nullstille telleren ved å trykke start
+                    // hvis startTimer ikke er 0
+                    if (pref.getLong("startTimer", 0) == 0) {
+                        editor.putLong("startTimer", storedStart);
+                        Toast.makeText(mContext, "Timeregistrering startet",Toast.LENGTH_SHORT).show();
+                        editor.apply();
+                    } else {
+                        Toast.makeText(mContext, "Du har allerede startet",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

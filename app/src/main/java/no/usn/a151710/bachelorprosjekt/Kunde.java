@@ -27,32 +27,6 @@ public class Kunde {
         this.mail = jsonKunde.optString(KOL_MAIL);
     }
 
-    public static ArrayList<Kunde> lagKundeListe(String jsonKundeString)
-            throws JSONException, NullPointerException {
-
-        ArrayList<Kunde> kundeListe = new ArrayList<>();
-        JSONObject jsonData = new JSONObject(jsonKundeString);
-        JSONArray jsonKundeTabell = jsonData.optJSONArray(TABELL_NAVN);
-        for (int i = 0; i < jsonKundeTabell.length(); i++) {
-            JSONObject jsonKunde= (JSONObject) jsonKundeTabell.get(i);
-            Kunde denneKunden  = new Kunde((jsonKunde));
-            kundeListe.add((denneKunden));
-        }
-        return kundeListe;
-    }
-
-    public JSONObject lagJSONObject () {
-        JSONObject jsonKunde = new JSONObject();
-
-        try {
-            jsonKunde.put(KOL_CUSTOMER_NAME, this.customerName);
-            jsonKunde.put(KOL_MAIL, this.mail);
-        } catch (JSONException e) {
-            return null;
-        }
-        return jsonKunde;
-    }
-
     public String getCustomerName() {
         return customerName;
     }

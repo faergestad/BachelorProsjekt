@@ -1,16 +1,6 @@
 package no.usn.a151710.bachelorprosjekt;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class Oppdrag {
 

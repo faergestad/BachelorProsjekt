@@ -59,19 +59,38 @@
         style="@style/loginScreen"
         android:textColor="@android:color/white"
         android:textSize="30sp"
-        android:textAlignment="center"
         android:inputType="textPassword"
+        android:textAlignment="center"
         android:backgroundTint="@color/transWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-        <!--android:hint="@string/password" /> -->
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <ImageButton
+        <Switch
+            android:id="@+id/huskMeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Husk meg"
+            android:fontFamily="@font/roboto_thin"
+            android:textColor="#FFFF"/>
+
+    </LinearLayout>
+
+    <ImageButton
             android:layout_gravity="center"
             android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/logginn"
             android:id="@+id/loginBtn"

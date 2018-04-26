@@ -25,8 +25,8 @@
             android:layout_gravity="center"
             android:fontFamily="@font/roboto_thin"
             android:text="Arbeidsplass: "
-            android:textColor="#FFFF"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="#FFFF"/>
 
         <TextView
             android:id="@+id/timeregPlace"

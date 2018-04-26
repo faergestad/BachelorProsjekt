@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/backgroundhsn"
-    tools:context="no.usn.a151710.bachelorprosjekt.SeAnsatte">
+    tools:context="no.usn.a151710.bachelorprosjekt.SeOppdrag">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/viewA">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,6 +54,23 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="48dp"
+        android:clipToPadding="false"/>
 
-</LinearLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:elevation="20dp"
+        android:onClick="clearWorkplace"
+        android:src="@drawable/ic_clear_black_36dp"
+        android:stateListAnimator="@null"
+        app:layout_anchor="@id/viewA"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>

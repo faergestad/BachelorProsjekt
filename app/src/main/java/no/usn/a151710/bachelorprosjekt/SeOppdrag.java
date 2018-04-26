@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -42,14 +43,12 @@ import static java.lang.Integer.parseInt;
 
 public class SeOppdrag extends AppCompatActivity {
 
-    private RecyclerView mRecyclerview;
-    Context context;
-    private LinearLayoutManager linearLayoutManager;
+
     private List<Oppdrag> oppdragListe;
     private RecyclerView.Adapter adapter;
-    String name, address, mail, description, startDate, expDate;
-    int pID, serviceID;
+    String name, description;
     public static TextView arbeidsplass;
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -57,19 +56,19 @@ public class SeOppdrag extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oppdrag);
 
-        mRecyclerview = findViewById(R.id.recyclerView3);
+        RecyclerView mRecyclerview = findViewById(R.id.recyclerView3);
 
         oppdragListe = new ArrayList<>();
         adapter = new RecyclerViewOppdragAdapter(this, oppdragListe);
 
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setLayoutManager(linearLayoutManager);
         mRecyclerview.setAdapter(adapter);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Arbeidsplass", 0);
+        sharedPreferences = getSharedPreferences("Arbeidsplass", 0);
         String name = sharedPreferences.getString("Firma", "");
 
         arbeidsplass = findViewById(R.id.oppdragPlace);
@@ -78,6 +77,13 @@ public class SeOppdrag extends AppCompatActivity {
         getData();
     }
 
+    public void clearWorkplace(View view) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Firma", "");
+        editor.apply();
+
+        arbeidsplass.setText("");
+    }
 
     private void getData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -132,63 +138,5 @@ public class SeOppdrag extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonStringRequest);
     }
-
-  /*
-   public class LastOppdrag extends AsyncTask<String , String , Long> {
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-       @Override
-       protected Long doInBackground(String... params) {
-            HttpURLConnection connection = null;
-            try{
-                //URL oppdragListeURL = new URL( "http://10.0.2.2/BachelorProsjektNettsted/api.php/project?&transform=1");
-                URL oppdragListeURL = new URL("http://gakk.one/appOppdrag.php");
-                connection = (HttpURLConnection) oppdragListeURL.openConnection();
-                connection.connect();
-                int status = connection.getResponseCode();
-                if (status == HttpURLConnection.HTTP_OK) {
-                    InputStream is = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                    String responseString;
-                    StringBuilder sb = new StringBuilder();
-                    while ((responseString = reader.readLine()) != null) {
-                        sb = sb.append(responseString);
-                    }
-                    String oppdragData = sb.toString();
-                    dataArray = Oppdrag.lagOppdragListe(oppdragData);
-                    return (0l);
-                } else {
-                    return (1L);
-                }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return (1L);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return (1L);
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                return (1L);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return (1L);
-            } finally {
-                connection.disconnect();
-            }
-       }
-
-       @Override
-       protected void onPostExecute(Long result) {
-            if (result == 0) {
-                getOppdrag(dataArray);
-            } else {
-                Log.d("Feil: ", "Feil på databasen");
-            }
-       }
-   } */
 
 }

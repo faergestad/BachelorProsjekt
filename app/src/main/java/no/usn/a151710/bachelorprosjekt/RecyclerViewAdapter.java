@@ -5,7 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 /**
@@ -16,11 +21,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     List<Ansatt> ansatt;
+    RequestOptions options;
 
-    public RecyclerViewAdapter(List<Ansatt> ansatt, Context context) {
+    public RecyclerViewAdapter(Context context, List<Ansatt> ansatt) {
 
         super();
-
+        options = new RequestOptions()
+                .circleCrop()
+                .placeholder(R.drawable.ansatt)
+                .error(R.drawable.ansatt);
         this.ansatt = ansatt;
         this.context = context;
     }
@@ -40,8 +49,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Ansatt ansatt1 = ansatt.get(position);
 
         holder.NummerTextView.setText(ansatt1.getfName() + " " + ansatt1.getlName());
-        holder.TilgangsTextView.setText(String.valueOf(ansatt1.getAccessLevel()));
         holder.StillingsTextView.setText(ansatt1.getPosition());
+
+        // load image from the internet using Glide
+        Glide.with(context).load(ansatt.get(position).getImage()).apply(options).into(holder.ansattImage);
 
     }
 
@@ -52,16 +63,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        public ImageView ansattImage;
         public TextView NummerTextView;
-        public TextView TilgangsTextView;
         public TextView StillingsTextView;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
+            ansattImage = itemView.findViewById(R.id.ansattimg);
             NummerTextView = itemView.findViewById(R.id.textView2);
-            TilgangsTextView = itemView.findViewById(R.id.textView4);
             StillingsTextView = itemView.findViewById(R.id.textView6);
         }
 

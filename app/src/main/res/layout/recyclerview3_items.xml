@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start: "
-            android:textColor="#339900"/>
+            android:textColor="#0fc2a2"/>
 
         <TextView
             android:id="@+id/oppdragText10"
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Slutt: "
-            android:textColor="#9b3939"/>
+            android:textColor="#f32355"/>
 
         <TextView
             android:id="@+id/oppdragSlutt"
