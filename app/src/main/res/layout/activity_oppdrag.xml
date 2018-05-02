@@ -23,6 +23,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/oppdrag"
+            android:onClick="goBack"
             android:transitionName="oppdrag_trans"/>
 
         <TextView

@@ -1,7 +1,10 @@
 package no.usn.a151710.bachelorprosjekt;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -76,7 +79,8 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
     public static final long MILLIS_TO_HOURS = 3600000;
     long mStartTime = System.currentTimeMillis();
     long storedStart;
-    SharedPreferences pref, place;
+    SharedPreferences pref, place, ikkeHuskLogin;
+    SharedPreferences.Editor ikkeHuskEditor;
     // Brukt for å teste add.circle på map
     LatLng huset = new LatLng(59.414349, 9.058793);
     ArrayList<String> latList = new ArrayList<>();
@@ -96,6 +100,10 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
         final SharedPreferences sharedPreferences = getSharedPreferences("Arbeidsplass", 0);
         String name = sharedPreferences.getString("Firma", "");
         final int pID = sharedPreferences.getInt("pID", 0);
+
+        ikkeHuskLogin = getSharedPreferences("ikkeHusk", 0);
+        ikkeHuskEditor = ikkeHuskLogin.edit();
+        final String uID = ikkeHuskLogin.getString("bruker", "");
 
         arbeidsplass = findViewById(R.id.timeregPlace);
         arbeidsplass.setText(name);
@@ -134,8 +142,9 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                 if (place.getString("Firma", "") == sjekk) {
                     Toast.makeText(mContext, "Du har ikke valgt oppdrag", Toast.LENGTH_SHORT).show();
                 } else {
-                    // gjør så brukeren ikke kan nullstille telleren ved å trykke start
-                    // hvis startTimer ikke er 0
+                    /** Gjør så brukeren ikke kan nullstille telleren ved å trykke start
+                     * hvis startTimer ikke er 0
+                     */
                     if (pref.getLong("startTimer", 0) == 0) {
                         editor.putLong("startTimer", storedStart);
                         Toast.makeText(mContext, "Timeregistrering startet",Toast.LENGTH_SHORT).show();
@@ -153,31 +162,92 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                 if (pref.getLong("startTimer", 0) == 0) {
                     Toast.makeText(mContext, "Du har ikke startet klokka enda..", Toast.LENGTH_SHORT).show();
                 } else {
-                    SharedPreferences.Editor editor = pref.edit();
+                    final SharedPreferences.Editor editor = pref.edit();
                     Long startTimer = pref.getLong("startTimer", 0);
                     // Hvis startTimer innholder en verdi parser vi det og beregner hvor lang tid det har gått
                     if (startTimer != 0) {
                         long since = System.currentTimeMillis() - pref.getLong("startTimer", 0);
 
-                        int seconds = (int) ((since / 1000) % 60);
+                        // int seconds = (int) ((since / 1000) % 60); Trenger nok ikke den her
                         int minutes = (int) ((since / MILLIS_TO_MINUTES) % 60);
                         int hours = (int) ((since / MILLIS_TO_HOURS) % 24);
-                        int roundedHours = 8;
+                        int roundedHours = 0;
 
-                        if (roundedHours < 1) {
-                            //Toast.makeText(mContext, "Du har ikke jobbet èn time engang..", Toast.LENGTH_SHORT).show();
+                        if (hours < 1) {
+
+                            // Et dialogvindu som spør om brukeren mente å stoppe
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+                            builder1.setMessage("Mente du å stoppe?");
+                            builder1.setCancelable(false);
+                            // Nullstiller timeren hvis brukeren trykket feil, og har logget mindre enn 1 time
+                            builder1.setNegativeButton(
+                                    "Ja",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            editor.clear();
+                                            editor.apply();
+                                            Toast.makeText(mContext, "Timer nullstilt", Toast.LENGTH_SHORT).show();
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            builder1.setPositiveButton(
+                                    "Nei",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            AlertDialog alert11 = builder1.create();
+                            alert11.show();
+
                             //Toast.makeText(mContext, "Det ble ikke logget timer", Toast.LENGTH_SHORT).show();
-                            //  TODO runde opp hvert påbegynte kvarter til neste halvtime
-                            // Runder foreløpig bare opp hvis hver påbegynte time >= 30 min
-                            // midlertidig runder vi opp hver startet timer til 1 time for å sjekke mot databasen
-                            if (minutes <= 30) {
-                                Log.d("Arbeidsdag", "" + hours + ":" + minutes);
-                            }
-                            // TODO Legge til støtte for varsling om overtid if(hours > 8)
-                        } else {
-                            if (minutes >= 30) {
+                            /**TODO runde opp hvert påbegynte kvarter til neste halvtime
+                             * Runder foreløpig bare opp hvis hver påbegynte time >= 30 min
+                             * midlertidig runder vi opp hver startet timer til 1 time for å sjekke mot databasen
+                             */
+                            if (minutes < 30) {
+                                /** TODO mer kompleks timeregistreringslogikk
+                                Toast.makeText(mContext, "Runder ikke opp til 1 time", Toast.LENGTH_SHORT).show();
+                                 */
+                            } else {
+                                // Runder opp hver påbegynte time etter 30 min
                                 roundedHours = hours + 1;
                             }
+                            // TODO Legge til støtte for varsling om overtid if(hours > 8)
+                        } else if (hours > 9) {
+
+                            // Et dialogvindu som spør om brukeren mente å stoppe
+                            // TODO Legge til klokkeslettet brukeren startet timeren på + det klokkeslettet + 8timer
+                            // TODO Generelt lage en bedre løsning på manuell overtid. Varsel, kanskje?
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+                            builder1.setMessage("Har du jobbet overtid?");
+                            builder1.setCancelable(false);
+
+                            builder1.setNegativeButton(
+                                    "Ja",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // Her mangler det funksjonalitet
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            builder1.setPositiveButton(
+                                    "Nei",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // Her mangler det funksjonalitet
+                                            // Sette forløpig bare "hours" til 8?
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            AlertDialog alert11 = builder1.create();
+                            alert11.show();
+
+                        } else {
 
                             // Volley-request for å sende loggede timer til databasen
                             final String URL = "http://gakk.one/appLoggTimer.php";
@@ -188,6 +258,12 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                                 public void onResponse(String response) {
                                     if(response.contains("success")) {
                                         Toast.makeText(mContext, "Timer registrert!", Toast.LENGTH_SHORT).show();
+
+                                        pref = getApplicationContext().getSharedPreferences("Arbeidsplass", 0); // 0 - for private mode
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("Firma", "");
+                                        editor.apply();
+
                                     }
                                 }
                             }, new Response.ErrorListener() {
@@ -198,11 +274,13 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                             }){
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
+                                    // Sender med parametere i en POST-request til serveren
                                     Map<String, String> params = new HashMap<>();
                                     params.put("tabell", "timesheet");
                                     params.put("pID", String.valueOf(pID));
+                                    // TODO hente hver enkelt brukers serviceID
                                     params.put("serviceID", "1");
-                                    params.put("userID", "10000");
+                                    params.put("userID", uID);
                                     params.put("hours", String.valueOf(finalRoundedHours));
                                     return params;
                                 }
@@ -210,10 +288,11 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                             RequestQueue requestQueue = Volley.newRequestQueue(mContext);
                             requestQueue.add(stringRequest);
 
-                            //Toast.makeText(mContext, "Timer logget!", Toast.LENGTH_SHORT).show();
                             editor.clear();
                             editor.apply();
                             timer.setText(roundedHours + " Timer, " + minutes + " Minutter");
+                            arbeidsplass = findViewById(R.id.timeregPlace);
+                            arbeidsplass.setText("");
                         }
 
                     }
@@ -237,6 +316,9 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
+                                /* TODO legge til en sjekk av data (backend) som determinerer størrelsen på sirkelene
+                                // Ser for meg at dette kan gjøres via google-api, eller ved å legge til et beskrivende ord om
+                                // arbeidsplassen når man oppretter oppdrag i grensesnittet */
                                 latList.add(jsonobject.getString("lat"));
                                 lngList.add(jsonobject.getString("lng"));
                             }
@@ -271,7 +353,7 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        //Initialize Google Play Services
+        // Initialiserer Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -322,22 +404,18 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-        //Showing Current Location Marker on Map
+
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        String provider = locationManager.getBestProvider(new Criteria(), true);
+
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
-        //move map camera
+        // Flytter kart-kameraet
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(latLng, 17);
         mMap.animateCamera(yourLocation);
-        //this code stops location updates
+        // Dette stopper lokasjonsoppdateringer
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
                     this);
@@ -352,18 +430,16 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Asking user if explanation is needed
+            // Sjekker om brukeren trenger forklaring
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                //Prompt the user once explanation has been shown
+
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
+
             } else {
-                // No explanation needed, we can request the permission.
+                // Ingen forklaring trengs, spør bruker om tillatelse
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
@@ -379,11 +455,9 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
+                // Hvis forespørsellen er kansellert, er dataene tomme
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted. Do the
-                    // contacts-related task you need to do.
                     if (ContextCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
@@ -405,4 +479,7 @@ public class TimeRegistrering extends FragmentActivity implements OnMapReadyCall
         // Måtte implementeres utenfor onCreate
     }
 
+    public void goBack(View view) {
+        this.finish();
+    }
 }

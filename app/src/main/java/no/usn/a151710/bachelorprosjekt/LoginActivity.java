@@ -3,6 +3,7 @@ package no.usn.a151710.bachelorprosjekt;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.graphics.Color.WHITE;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
@@ -46,11 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        pref = getApplicationContext().getSharedPreferences("Arbeidsplass", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("Firma", "");
-        editor.apply();
-
         huskMeg = findViewById(R.id.huskMeg);
         skrivBrukernavn = findViewById(R.id.userField);
         skrivPassord = findViewById(R.id.passField);
@@ -60,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         userPref = getSharedPreferences("login", 0);
         userEditor = userPref.edit();
+
         String prefUname = userPref.getString("uID", "");
         String prefPass = userPref.getString("password", "");
 
@@ -80,6 +78,18 @@ public class LoginActivity extends AppCompatActivity {
                     userEditor.putString("uID", skrivBrukernavn.getText().toString());
                     userEditor.putString("password", skrivPassord.getText().toString());
                     userEditor.apply();
+
+                    SharedPreferences ikkeHuskLogin = getSharedPreferences("ikkeHusk", 0);
+                    SharedPreferences.Editor ikkeHuskEditor = ikkeHuskLogin.edit();
+                    ikkeHuskEditor.clear();
+                    ikkeHuskEditor.putString("bruker", skrivBrukernavn.getText().toString());
+                    ikkeHuskEditor.apply();
+                } else {
+                    SharedPreferences ikkeHuskLogin = getSharedPreferences("ikkeHusk", 0);
+                    SharedPreferences.Editor ikkeHuskEditor = ikkeHuskLogin.edit();
+                    ikkeHuskEditor.clear();
+                    ikkeHuskEditor.putString("bruker", skrivBrukernavn.getText().toString());
+                    ikkeHuskEditor.apply();
                 }
 
             } else {

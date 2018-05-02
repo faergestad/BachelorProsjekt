@@ -110,4 +110,7 @@ public class SeAnsatte extends AppCompatActivity {
         requestQueue.add(jsonStringRequest);
     }
 
+    public void goBack(View view) {
+        this.finish();
+    }
 }

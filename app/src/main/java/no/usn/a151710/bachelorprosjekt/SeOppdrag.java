@@ -3,8 +3,10 @@ package no.usn.a151710.bachelorprosjekt;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.graphics.Color.WHITE;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
@@ -67,6 +70,9 @@ public class SeOppdrag extends AppCompatActivity {
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setLayoutManager(linearLayoutManager);
         mRecyclerview.setAdapter(adapter);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setBackgroundTintList(ColorStateList.valueOf(WHITE));
 
         sharedPreferences = getSharedPreferences("Arbeidsplass", 0);
         String name = sharedPreferences.getString("Firma", "");
@@ -139,4 +145,7 @@ public class SeOppdrag extends AppCompatActivity {
         requestQueue.add(jsonStringRequest);
     }
 
+    public void goBack(View view) {
+        this.finish();
+    }
 }

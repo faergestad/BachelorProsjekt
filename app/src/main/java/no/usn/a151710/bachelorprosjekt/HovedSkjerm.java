@@ -21,15 +21,13 @@ public class HovedSkjerm extends AppCompatActivity {
     ImageView oppdragKnapp;
     ImageView kundeKnapp;
     ImageView ansattKnapp;
-    SharedPreferences pref, userPref;
+    SharedPreferences userPref;
     SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoved_skjerm);
-
-        pref = getSharedPreferences("Arbeidsplass", 0);
 
         timeRegKnapp    = findViewById(R.id.timeregbtn);
         oppdragKnapp    = findViewById(R.id.oppdragbtn);

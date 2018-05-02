@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -115,4 +116,7 @@ public class SeKunde extends AppCompatActivity {
         requestQueue.add(jsonStringRequest);
     }
 
+    public void goBack(View view) {
+            this.finish();
+    }
 }
