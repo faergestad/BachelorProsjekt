@@ -10,9 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.List;
 
-/**
- * Created by GeorgPersen on 02.03.2018.
- */
 
 public class RecyclerViewKundeAdapter extends RecyclerView.Adapter<RecyclerViewKundeAdapter.ViewHolder> {
 

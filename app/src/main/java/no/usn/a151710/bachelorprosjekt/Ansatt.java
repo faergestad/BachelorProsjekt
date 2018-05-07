@@ -17,7 +17,7 @@ public class Ansatt {
     private static final String KOL_LNAME = "lName";
     private static final String KOL_IMAGE = "image";
 
-
+    // Lager et JSONObject med data fra Volley string-request
     public Ansatt(JSONObject jsonAnsatt) {
         this.username = jsonAnsatt.optInt(KOL_USERNAME);
         this.password = jsonAnsatt.optString(KOL_PASSWORD);

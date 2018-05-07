@@ -13,9 +13,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-/**
- * Created by GeorgPersen on 21.03.2018.
- */
 
 public class RecyclerViewOppdragAdapter extends RecyclerView.Adapter<RecyclerViewOppdragAdapter.ViewHolder> {
 

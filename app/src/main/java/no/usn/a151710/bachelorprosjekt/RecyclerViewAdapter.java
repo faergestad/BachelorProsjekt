@@ -13,9 +13,6 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-/**
- * Created by GeorgPersen on 02.03.2018.
- */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -51,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.NummerTextView.setText(ansatt1.getfName() + " " + ansatt1.getlName());
         holder.StillingsTextView.setText(ansatt1.getPosition());
 
-        // load image from the internet using Glide
+        // Laster inn bilde fra serveren ved hjelp av Glide
         Glide.with(context).load(ansatt.get(position).getImage()).apply(options).into(holder.ansattImage);
 
     }

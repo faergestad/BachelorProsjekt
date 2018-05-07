@@ -40,9 +40,6 @@ import static android.graphics.Color.WHITE;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-/**
- * Created by GeorgPersen on 09.03.2018.
- */
 
 public class SeOppdrag extends AppCompatActivity {
 

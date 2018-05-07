@@ -1,13 +1,6 @@
 package no.usn.a151710.bachelorprosjekt;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class Kunde {
 
@@ -21,7 +14,7 @@ public class Kunde {
         this.customerName = customerName;
         this.mail = mail;
     }
-
+    // Lager et JSONObject med data fra Volley string-request
     public Kunde(JSONObject jsonKunde) {
         this.customerName = jsonKunde.optString(KOL_CUSTOMER_NAME);
         this.mail = jsonKunde.optString(KOL_MAIL);
