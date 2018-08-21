@@ -1,2 +1,4 @@
 # BachelorProsjekt
-Androidapplikasjon for timeregistrering. Enten manuelt, eller automatisk via geolokasjon og GeoFence
+### Androidapplikasjon for timeregistrering. Enten manuelt, eller automatisk via geolokasjon og GeoFence
+
+Bilder kommer..
